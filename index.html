@@ -1,0 +1,118 @@
+<html>
+	<head>
+		<script type="text/javascript" src="js/lib/jquery-2.2.3.min.js"></script>
+		<script type="text/javascript" src="js/lib/jquery-collision.min.js"></script>
+		<script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/lib/hammer.min.js"></script>
+		<script type="text/javascript" src="js/main.js"></script>
+		<script type="text/javascript" src="js/perguntas.js"></script>
+		<script type="text/javascript" src="js/game.js"></script>
+		<script type="text/javascript" src="js/player.js"></script>
+		<link href="./css/bootstrap.min.css" rel="stylesheet">
+		<link href="layout.css" rel="stylesheet">
+		<meta charset="utf-8">
+	</head>
+	<body>
+
+		<div class="start-container">
+			<div class="logo">
+				<img src="./img/logo.png">
+			</div>
+			<div class="button start-game" onclick="toggleFullScreen()">
+				<img src="./img/play.png">
+			</div>
+		</div>
+
+		<div class="category-container" style="display: none;">
+			<h1 class="title">Escolha a categoria</h1>
+			<div>
+				<div class="category-button">
+					<img class="math" src="./img/matematica.jpg">
+					<div>Matemática</div>
+				</div>
+				<div class="category-button ">
+					<img class="portuguese" src="./img/portugues.jpg">
+					<div>Português</div>
+				</div>
+				<div class="category-button ">
+					<img class="english" src="./img/ingles.jpg">
+					<div>Inglês</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="level-container" style="display: none;">
+			<h1 class="title">Escolha o nível</h1>
+			<div>
+				<div class="level-button">
+					<img class="level-1" src="./img/1_serie.jpg">
+					<div>1º ano</div>
+				</div>
+				<div class="level-button ">
+					<img class="level-2" src="./img/2_serie.jpg">
+					<div>2º ano</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="game-container" style="display: none;">
+			<div id="player1" style="width: 50%; height: 100%; border-right: 5px solid black; display: inline-block;"></div>
+			<div id="player2" style="width: 49%; height: 100%; display: inline-block;"></div>
+			<div class="restart" onclick="location.reload();">Reiniciar</div>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var game = new Game();
+
+			var player1 = new Player($("#player1"));
+			game.addPlayer(player1);
+
+			var player2 = new Player($("#player2"));
+			game.addPlayer(player2);
+
+			// Gambi para desabilitar o zoom
+			var hammertime = new Hammer($(".game-container")[0], {domEvents:true});
+			hammertime.on('pan', function(e) {
+				e.preventDefault();
+			});
+
+			// verificar se é melhor usar "tap"
+			$(".button.start-game").on("click", function() {
+
+				$(".start-container").hide();
+				$(".category-container").show();
+
+				$(".category-button").on("click", function(event) {
+					$(".category-container").hide();
+					$(".level-container").show();
+					
+					var element = $(event.target);
+					if (element.hasClass("math")) {
+						game.setCategoria(Categoria.MATEMATICA);
+					} else if (element.hasClass("portuguese")) {
+						game.setCategoria(Categoria.PORTUGUES);
+					} else if (element.hasClass("english")) {
+						game.setCategoria(Categoria.INGLES);
+					}
+
+					$(".level-button").on("click", function(event) {
+
+						$(".level-container").hide();
+						$(".game-container").show();
+
+						var levelElement = $(event.target);
+						if (levelElement.hasClass("level-1")) {
+							game.setNivel(1);
+						} else if (levelElement.hasClass("level-2")) {
+							game.setNivel(2);
+						}
+
+						game.iniciar();
+					});
+				});
+			});
+		});
+	</script>
+</html>
