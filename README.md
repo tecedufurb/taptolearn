@@ -2,8 +2,6 @@
 
 Jogo em desenvolvimento para a matéria de Sistemas Multimídia da FURB - Universidade Regional de Blumenau
 
-https://danielgielowjr.github.io/TapToLearn
-
 ## Implementações
 * ~~Criar menu inicial para escolher categoria e nível~~;
 * ~~Criar arquivo JS que retorna as perguntas e respostas~~;
@@ -22,4 +20,3 @@ https://danielgielowjr.github.io/TapToLearn
 * ~~Não permitir mover a peça para "invadir" o campo do adversário~~;
 * ~~Após mostrar feedback de resposta correta, não permitir mover as peças~~;
 * ~~Desabilitar zoom;~~
-
